@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.idea.maven.dao.service.user.IUserDao">
+
+	<select id="findUserAll" resultType="com.idea.maven.dao.vo.UserVo">
+		select * from user
+	</select>
+	
+	<select id="findUserByName" resultType="com.idea.maven.dao.vo.UserVo" parameterType="String">
+		select * from user where 1 = 1
+		<if test="${userName != null and userName != ''}">
+			and name = #{userName}
+		</if>
+	</select>
+	
+</mapper>

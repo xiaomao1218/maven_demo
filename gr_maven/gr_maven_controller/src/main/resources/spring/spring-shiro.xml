@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+	    http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<bean id="userRealm" class="com.idea.maven.controller.login.UserRealm"/>
+	
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		 <property name="realm" ref="userRealm"/>
+	</bean>
+	
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/login"/>
+        <property name="successUrl" value="/"/>
+        <property name="filterChainDefinitions">
+        	<value>
+              <!-- 退出拦截，请求logout.action执行退出操作 -->
+              /logout = logout
+              <!-- 无权访问页面 -->
+              <!-- /refuse = anon -->
+              <!-- 无参,表示必须存在用户,当登入操作时不做检查 -->
+              /user/** = anon        
+              <!-- roles[XX]表示有XX角色才可访问 -->
+              /item/list = roles[item],authc
+              /js/** anon
+              /images/** anon
+              /styles/** anon
+              /validatecode.jsp anon
+              /item/* authc
+              <!-- user表示身份认证通过或通过记住我认证通过的可以访问 -->
+              /** = authc
+           </value>
+        </property>
+	</bean>
+    
+</beans>

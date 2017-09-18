@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.idea.maven.dao.service.news.INewsDao">
+
+	<select id="findNewsByPage" resultType="com.idea.maven.dao.vo.NewsVo" parameterType="java.util.Map">
+		select
+			id as id,
+			news_title as newsTitle,
+			news_content as newsContent,
+			author as author,
+			status as status,
+			create_time as createTime,
+			heart_num as heartNum 
+		from s_news limit #{start}, #{size}
+	</select>
+	
+	<insert id="saveNews" parameterType="com.idea.maven.dao.vo.NewsVo">
+		insert into s_news(id, news_title, news_content, author, status, create_time, heart_num)
+		values(#{id}, #{newsTitle}, #{newContent}, #{author}, 1, #{createTime}, 0)
+	</insert>
+	
+	<update id="updateNews" parameterType="com.idea.maven.dao.vo.NewsVo">
+		update s_news set news_title = #{newsTitle}, news_content = #{newContent}, author = #{author},
+		status = #{status}, heart_num = #{heartNum} where id = #{id} 
+	</update>
+	
+	<delete id="delNews" parameterType="java.math.BigInteger">
+		update s_news set status = 0 where id = #{id}
+	</delete>
+	
+</mapper>
