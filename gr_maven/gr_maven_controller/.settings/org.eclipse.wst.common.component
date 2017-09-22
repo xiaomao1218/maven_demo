@@ -11,6 +11,6 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/gr_maven_controller/target/classes"/>
-        <property name="context-root" value="/"/>
+        <property name="context-root" value="gr_maven_controller"/>
     </wb-module>
 </project-modules>
